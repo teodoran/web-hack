@@ -1,0 +1,60 @@
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  notesApiProject: 'Notes.Api/Notes.Api.csproj'
+  notesApiTestProject: 'Notes.Api.Test/Notes.Api.Test.csproj'
+
+steps:
+# .NET Core 3.1 isn't currently installed by default on hosted build agents
+# Start off by installing it manually
+- task: UseDotNet@2
+  displayName: 'Use .NET Core 3.1'
+  inputs:
+    packageType: sdk
+    version: 3.1.100
+    installationPath: $(Agent.ToolsDirectory)/dotnet
+
+# Test and publish .NET Core projects
+- task: DotNetCoreCLI@2
+  displayName: 'Test Notes.Api'
+  inputs:
+    command: test
+    projects: $(notesApiTestProject)
+    arguments: '--configuration Release'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Publish Notes.Api'
+  inputs:
+    command: publish
+    publishWebProjects: false
+    projects: $(notesApiProject)
+    arguments: '--configuration Release --output Notes.Api.Publish'
+    zipAfterPublish: false
+    modifyOutputPath: true
+
+# Publish build artifacts
+# Only performed on builds from master-branch
+- task: PublishBuildArtifacts@1
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
+  displayName: 'Publish Notes.Api.Artifacts'
+  inputs:
+    PathToPublish: Notes.Api.Publish
+    ArtifactName: Notes.Api.Artifacts
+
+- task: PublishBuildArtifacts@1
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
+  displayName: 'Publish Notes.Client.Artifacts'
+  inputs:
+    PathToPublish: Notes.Client
+    ArtifactName: Notes.Client.Artifacts
+
+- task: PublishBuildArtifacts@1
+  condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
+  displayName: 'Publish Notes.Api.Test.Postman'
+  inputs:
+    PathToPublish: Notes.Api.Test.Postman
+    ArtifactName: Notes.Api.Test.Postman.Artifacts

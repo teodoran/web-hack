@@ -1,0 +1,12 @@
+# VS Code user settings
+.vscode/
+
+# VS user settings
+*.sln
+
+# .NET Core build output
+bin/
+obj/
+
+# Development settings
+*.Development.json

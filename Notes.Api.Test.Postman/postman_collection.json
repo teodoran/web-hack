@@ -1,0 +1,729 @@
+{
+	"info": {
+		"_postman_id": "6a763a6d-ceba-482e-93fa-d721a970c221",
+		"name": "Notes API",
+		"description": "An API for sticky notes.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Ping",
+			"item": [
+				{
+					"name": "Returns PONG.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a84789f9-b07e-49b5-b3ac-ad1368a426b6",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response is PONG\", function () {",
+									"    pm.response.to.have.body(\"PONG\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/Ping",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"Ping"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/Ping",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Ping"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "\"<string>\""
+						}
+					]
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Notes",
+			"item": [
+				{
+					"name": "Retrieves a list of all sticky notes written by a given author.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d3a214d5-57c1-4f83-81a3-ed39639f2624",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/Notes?Author=default",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"Notes"
+							],
+							"query": [
+								{
+									"key": "Author",
+									"value": "default",
+									"description": "(Required) "
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Bad Request",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/Notes?Author=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Notes"
+									],
+									"query": [
+										{
+											"key": "Author",
+											"value": "<string>"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"type\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"extensions\": \"<object>\"\n}"
+						},
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/Notes?Author=<string>",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Notes"
+									],
+									"query": [
+										{
+											"key": "Author",
+											"value": "<string>"
+										}
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "[\n {\n  \"author\": \"<string>\",\n  \"content\": \"<string>\",\n  \"id\": \"<integer>\"\n },\n {\n  \"author\": \"<string>\",\n  \"content\": \"<string>\",\n  \"id\": \"<integer>\"\n }\n]"
+						}
+					]
+				},
+				{
+					"name": "Creates a new sticky note.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c14b8017-d026-4412-8763-5d9e050574b0",
+								"exec": [
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"var note = pm.response.json();",
+									"pm.environment.set(\"noteId\", note.id);",
+									"",
+									"pm.test(\"Note author is default\", function () {",
+									"    pm.expect(note.author).to.eql(\"default\");",
+									"});",
+									"",
+									"pm.test(\"Note content is expected\", function () {",
+									"    pm.expect(note.content).to.eql(\"Ibsens ripsbusker og andre buskevekster.\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"author\": \"default\",\n    \"content\": \"Ibsens ripsbusker og andre buskevekster.\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/Notes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"Notes"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"author\": \"<string>\",\n    \"content\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/Notes",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Notes"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"author\": \"<string>\",\n \"content\": \"<string>\",\n \"id\": \"<integer>\"\n}"
+						},
+						{
+							"name": "Bad Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"author\": \"<string>\",\n    \"content\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/Notes",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Notes"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"type\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"extensions\": \"<object>\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Retrieves a single sticky note.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1a6f1a7d-4f28-4c2c-81d1-fc22ea09dfa7",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var note = pm.response.json();",
+									"var expectedNoteId = pm.environment.get(\"noteId\");",
+									"",
+									"pm.test(\"Note id is expected\", function () {",
+									"    pm.expect(note.id).to.eql(expectedNoteId);",
+									"});",
+									"",
+									"pm.test(\"Note author is default\", function () {",
+									"    pm.expect(note.author).to.eql(\"default\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/Notes/:noteId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"Notes",
+								":noteId"
+							],
+							"variable": [
+								{
+									"key": "noteId",
+									"value": "{{noteId}}",
+									"description": "(Required) "
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/Notes/:noteId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Notes",
+										":noteId"
+									],
+									"variable": [
+										{
+											"key": "noteId"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"author\": \"<string>\",\n \"content\": \"<string>\",\n \"id\": \"<integer>\"\n}"
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/Notes/:noteId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Notes",
+										":noteId"
+									],
+									"variable": [
+										{
+											"key": "noteId"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"type\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"extensions\": \"<object>\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Updates part of a single sticky note.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "de83b722-933a-46ac-a204-75d6a3b47ade",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var note = pm.response.json();",
+									"var expectedNoteId = pm.environment.get(\"noteId\");",
+									"",
+									"pm.test(\"Note id is expected\", function () {",
+									"    pm.expect(note.id).to.eql(expectedNoteId);",
+									"});",
+									"",
+									"pm.test(\"Note author is default\", function () {",
+									"    pm.expect(note.author).to.eql(\"default\");",
+									"});",
+									"",
+									"pm.test(\"Note content is expected\", function () {",
+									"    pm.expect(note.content).to.eql(\"Denne er blitt oppdatert.\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"content\": \"Denne er blitt oppdatert.\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/Notes/:noteId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"Notes",
+								":noteId"
+							],
+							"variable": [
+								{
+									"key": "noteId",
+									"value": "{{noteId}}",
+									"description": "(Required) "
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Bad Request",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"content\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/Notes/:noteId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Notes",
+										":noteId"
+									],
+									"variable": [
+										{
+											"key": "noteId"
+										}
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"type\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"extensions\": \"<object>\"\n}"
+						},
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"content\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/Notes/:noteId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Notes",
+										":noteId"
+									],
+									"variable": [
+										{
+											"key": "noteId"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"author\": \"<string>\",\n \"content\": \"<string>\",\n \"id\": \"<integer>\"\n}"
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"content\": \"<string>\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/Notes/:noteId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Notes",
+										":noteId"
+									],
+									"variable": [
+										{
+											"key": "noteId"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"type\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"extensions\": \"<object>\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Deletes a single sticky note.",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8ac247e6-4e64-4e2f-80b3-23eef61eccf5",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/Notes/:noteId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"Notes",
+								":noteId"
+							],
+							"variable": [
+								{
+									"key": "noteId",
+									"value": "{{noteId}}",
+									"description": "(Required) "
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/Notes/:noteId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Notes",
+										":noteId"
+									],
+									"variable": [
+										{
+											"key": "noteId"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"author\": \"<string>\",\n \"content\": \"<string>\",\n \"id\": \"<integer>\"\n}"
+						},
+						{
+							"name": "Not Found",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/Notes/:noteId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"Notes",
+										":noteId"
+									],
+									"variable": [
+										{
+											"key": "noteId"
+										}
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n \"type\": \"<string>\",\n \"title\": \"<string>\",\n \"status\": \"<integer>\",\n \"detail\": \"<string>\",\n \"instance\": \"<string>\",\n \"extensions\": \"<object>\"\n}"
+						}
+					]
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"variable": [
+		{
+			"id": "baseUrl",
+			"key": "baseUrl",
+			"value": "/",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}

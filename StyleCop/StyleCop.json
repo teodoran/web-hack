@@ -1,0 +1,19 @@
+{
+  "$schema": "https://raw.githubusercontent.com/DotNetAnalyzers/StyleCopAnalyzers/master/StyleCop.Analyzers/StyleCop.Analyzers/Settings/stylecop.schema.json",
+  "settings": {
+    "orderingRules": {
+      "usingDirectivesPlacement": "preserve",
+      "blankLinesBetweenUsingGroups": "allow"
+    },
+    "maintainabilityRules": {
+      "topLevelTypes": [
+        "interface"
+      ]
+    },
+    "documentationRules": {
+      "documentInterfaces": false,
+      "documentInternalElements": false,
+      "documentExposedElements": false
+    }
+  }
+}

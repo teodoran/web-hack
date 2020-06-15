@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="StyleCop Rules" Description="Code linting rules https://github.com/DotNetAnalyzers/StyleCopAnalyzers/blob/master/DOCUMENTATION.md" ToolsVersion="14.0">
+  <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
+    <Rule Id="SA0001" Action="None" />
+    <Rule Id="SA1101" Action="None" />
+    <Rule Id="SA1128" Action="None" />
+    <Rule Id="SA1309" Action="None" />
+    <Rule Id="SA1414" Action="None" />
+    <Rule Id="SA1502" Action="None" />
+    <Rule Id="SA1515" Action="None" />
+    <Rule Id="SA1633" Action="None" />
+    <Rule Id="SA1413" Action="None" />
+    <Rule Id="SA1118" Action="None" />
+    <Rule Id="SA1201" Action="None" />
+    <Rule Id="SA1649" Action="None" />
+  </Rules>
+</RuleSet>
