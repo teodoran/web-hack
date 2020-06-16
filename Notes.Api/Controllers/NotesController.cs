@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Notes.Api.Database;
 using Notes.Api.Models;
 
@@ -26,7 +27,17 @@ namespace Notes.Api.Controllers
         public Note[] Get([FromQuery] QueryParameters parameters) =>
             _database.Notes
                 .Where(note => note.Author == parameters.Author)
+                .OrderBy(note => note.Id)
                 .ToArray();
+
+        /*[HttpGet]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public Note[] Get([FromQuery] QueryParameters parameters)
+        {
+            // TODO: Switch to SQLite to get FromSqlRaw to work
+            return _database.Notes.FromSqlRaw("SELECT * FROM dbo.Notes").ToArray();
+        }*/
 
         /// <summary>
         /// Creates a new sticky note.

@@ -6,11 +6,10 @@
 }
 
 body {
-    font-family: 'Indie Flower', cursive;
+    font-family: 'Indie Flower', 'IBM Plex Serif' cursive;
     font-size: 180%;
     margin: 1em;
     background: #666;
-    color: #fff;
 }
 
 ul, li {
@@ -46,6 +45,12 @@ ul li {
 ul li {
     -webkit-transform:  rotate(-6deg);
     -moz-transform: rotate(-6deg);
+}
+
+.note-content {
+    width: 100%;
+    height: 100%;
+    display: inline-block;
 }
 
 textarea, textarea:focus {

@@ -111,15 +111,9 @@ const notesList = document.getElementById('notesList');
 const author = window.location.search.substring(1) || 'default';
 
 const noteListItem = note => {
-    var textarea = document.createElement('textarea');
-    textarea.value = note.content;
-    textarea.addEventListener('change', () =>
-        updateNote(
-            note.id,
-            textarea.value,
-            updatedNote => {
-                textarea.value = updatedNote.content;
-            }), false);
+    var content = document.createElement('div');
+    content.setAttribute('class', 'note-content');
+    content.innerHTML = note.content;
 
     var button = document.createElement('button');
     button.setAttribute('type', 'button');
@@ -130,7 +124,7 @@ const noteListItem = note => {
             () => drawAllNotes(author)), false);
 
     var item = document.createElement('li');
-    item.appendChild(textarea);
+    item.appendChild(content);
     item.appendChild(button);
 
     return item;
