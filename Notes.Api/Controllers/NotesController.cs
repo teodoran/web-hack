@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,7 @@ using Notes.Api.Models;
 
 namespace Notes.Api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class NotesController : ControllerBase
@@ -22,34 +24,34 @@ namespace Notes.Api.Controllers
         /// Retrieves a list of all sticky notes written by a given author.
         /// </summary>
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public Note[] Get([FromQuery] QueryParameters parameters) =>
-            _database.Notes
-                .Where(note => note.Author == parameters.Author)
-                .OrderBy(note => note.Id)
-                .ToArray();
-
-        /*[HttpGet]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public Note[] Get([FromQuery] QueryParameters parameters)
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public Note[] Get([FromQuery] string containing)
         {
-            // TODO: Switch to SQLite to get FromSqlRaw to work
-            return _database.Notes.FromSqlRaw("SELECT * FROM dbo.Notes").ToArray();
-        }*/
+            var authorizationHeader = Request.Headers["Authorization"];
+            var user = BasicAuthenticationHandler.GetUserFrom(authorizationHeader);
+
+            return _database.Notes
+                .FromSqlRaw($"SELECT * FROM Notes WHERE Author='{user.Username}' AND Content LIKE '%{containing}%' ORDER BY Id")
+                .ToArray();
+        }
 
         /// <summary>
         /// Creates a new sticky note.
         /// </summary>
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<Note> Post([FromBody] CreateNote createNote)
         {
+            var authorizationHeader = Request.Headers["Authorization"];
+            var user = BasicAuthenticationHandler.GetUserFrom(authorizationHeader);
+
             var note = new Note
             {
-                Author = createNote.Author,
+                Author = user.Username,
                 Content = createNote.Content,
             };
 
@@ -65,6 +67,7 @@ namespace Notes.Api.Controllers
         [HttpGet("{noteId}", Name = "GetNoteById")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<Note> Get([FromRoute] int noteId)
         {
             var note = _database.Notes.Find(noteId);
@@ -82,6 +85,7 @@ namespace Notes.Api.Controllers
         [HttpPatch("{noteId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<Note> Patch([FromRoute] int noteId, [FromBody] UpdateNote patchNote)
         {
@@ -102,14 +106,10 @@ namespace Notes.Api.Controllers
         /// </summary>
         [HttpDelete("{noteId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<Note> Delete([FromRoute] int noteId)
         {
-            // This breaks the system.
-            // if (noteId >= 0)
-            // {
-            //     throw new System.Exception("BOOM!");
-            // }
             var note = _database.Notes.Find(noteId);
             if (note == null)
             {

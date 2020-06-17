@@ -10,3 +10,6 @@ obj/
 
 # Development settings
 *.Development.json
+
+# Development database
+Notes.Api/notes.db

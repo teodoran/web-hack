@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Notes.Api.Models
@@ -8,5 +9,7 @@ namespace Notes.Api.Models
         [MinLength(1)]
         [MaxLength(500)]
         public string Content { get; set; }
+
+        public Dictionary<string, object> Properties { get; set; }
     }
 }
