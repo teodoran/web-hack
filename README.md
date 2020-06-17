@@ -15,11 +15,6 @@ Open your favorite browser, and navigate to [localhost:5000/swagger](http://loca
 
 ![Animation showing how to use Swagger UI](Images/notes-api-swagger.gif)
 
-If you want to run the tests, navigate into the `sticky-notes/Notes.Api.Test/` folder and run `dotnet test`:
-```shell
-$ sticky-notes/Notes.Api.Test> dotnet test
-```
-
 The client can be served locally by serving the contents from `Notes.Client` with a suitable static server:
 ```shell
 $ sticky-notes/Notes.Api.Client> python -m SimpleHTTPServer
