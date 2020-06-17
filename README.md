@@ -14,8 +14,3 @@ $ sticky-api/Notes.Api> dotnet run
 Open your favorite browser, and navigate to [localhost:5000/swagger](http://localhost:5000/swagger). This should open [Swagger UI](https://swagger.io/tools/swagger-ui/), where you can try out the API.
 
 ![Animation showing how to use Swagger UI](Images/notes-api-swagger.gif)
-
-The client can be served locally by serving the contents from `Notes.Client` with a suitable static server:
-```shell
-$ sticky-notes/Notes.Api.Client> python -m SimpleHTTPServer
-```
