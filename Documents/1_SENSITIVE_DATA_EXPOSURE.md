@@ -1,5 +1,5 @@
-1. Sensitive Data Exposure
-==========================
+1 Sensitive Data Exposure
+=========================
 _In this hack we'll find the test username and password. Store some sensitive data i git log._
 
 The Fault: Find some sensitive data in git log

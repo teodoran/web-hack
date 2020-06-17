@@ -1,5 +1,5 @@
-4. SQL Injection
-================
+4 SQL Injection
+===============
 _Some SQL query to retrieve data that should not be available._
 
 The Fault: Retrieve note from other user from DB

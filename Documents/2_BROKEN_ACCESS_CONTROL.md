@@ -1,5 +1,5 @@
-2. Broken Access Control
-========================
+2 Broken Access Control
+=======================
 _In this hack we'll find notes for another user. Authenticated users can access other users resources._
 
 The Fault: Retrieve notes from other user by changing URL

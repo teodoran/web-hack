@@ -1,5 +1,5 @@
-3. Cross Site Scripting (XSS)
-=============================
+3 Cross Site Scripting (XSS)
+============================
 _Inject some JS to gain information from other user._
 
 The Fault: Example inject JS to own notes

@@ -1,5 +1,5 @@
-5. Insecure Deserialization
-===========================
+5 Insecure Deserialization
+==========================
 _Running .NET code using insecure deserialization._
 
 The Fault: Run some basic C# code on server
