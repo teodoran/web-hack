@@ -12,6 +12,7 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
+using Notes.Api.Admin;
 using Notes.Api.Database;
 
 namespace Notes.Api
@@ -36,6 +37,10 @@ namespace Notes.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var secrets = Configuration.GetSection("Secrets").Get<Secrets>();
+            services.AddSingleton(secrets);
+            Secret.Secrets = secrets;
+
             services
                 .AddControllers()
                 .AddNewtonsoftJson(options =>

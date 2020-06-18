@@ -51,3 +51,4 @@ With this update, we should be getting "401 Error: Unauthorized" when we try to 
 
 The Flag
 --------
+One of the notes in the database contains a flag. Can you find it?

@@ -50,7 +50,3 @@ Now we should have avoided the XSS attack, and the note should display the nefar
 ![](../Images/xss-avoided.png)
 
 _Usually we'll be using a web framework like React or Angular that'll be handling manipulating DOM-elements. These frameworks also tries to avoid XSS vulnerabilities by controlling how our code is able to interact with the DOM. This fortunately makes successful XSS attacks more rare, but we should still test for them, and make sure to keep our web framework up to date with the latest security fixes._
-
-The Flag
---------
-

@@ -49,3 +49,4 @@ Instead of using raw SQL that we construct ourselves, we use Linq statements, an
 
 The Flag
 --------
+There's a flag in the database that can be retrieved using SQL injection. Can you find it?
