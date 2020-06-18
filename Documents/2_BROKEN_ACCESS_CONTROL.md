@@ -36,7 +36,7 @@ The Fix
 -------
 In our case, users should not be able to view notes written by other authors, so we need to ensure that the API only returns notes written by the authorized user.
 
-One way of fixing this issue is to open [Notes.Api/Controllers/NotesController.cs][../Notes.Api/Controllers/NotesController.cs] and add some code to `public ActionResult<Note> Get([FromRoute] int noteId)`, that checks that the authorized user is the author of the note we found in the database:
+One way of fixing this issue is to open [Notes.Api/Controllers/NotesController.cs](../Notes.Api/Controllers/NotesController.cs) and add some code to `public ActionResult<Note> Get([FromRoute] int noteId)`, that checks that the authorized user is the author of the note we found in the database:
 
 ```csharp
 var authorizationHeader = Request.Headers["Authorization"];
