@@ -94,11 +94,8 @@ const remove = (url, success) => {
 // API Client
 
 let url = 'http://localhost:5000';
-if (window.location.href.includes('stickynotes')) {
-    url = 'https://sticky-notes-api.azurewebsites.net';
-}
-if (window.location.href.includes('stickynotestest')) {
-    url = 'https://sticky-notes-api-test.azurewebsites.net';
+if (window.location.href.includes('azurewebsites')) {
+    url = 'https://sticky-notes.azurewebsites.net';
 }
 
 const ping = () => getText(`${url}/ping`, 'NOT PONG', console.log);
