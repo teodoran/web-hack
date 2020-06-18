@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
@@ -39,7 +40,7 @@ namespace Notes.Api
                 .AddControllers()
                 .AddNewtonsoftJson(options =>
                 {
-                    options.SerializerSettings.TypeNameHandling = TypeNameHandling.All;
+                    options.SerializerSettings.TypeNameHandling = TypeNameHandling.Auto;
                 });
 
             services.AddCors(
@@ -109,6 +110,12 @@ namespace Notes.Api
 
             application
                 .UseCors(AllowSpecificOrigins)
+                .UseFileServer(new FileServerOptions
+                {
+                    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "../Notes.Client")),
+                    RequestPath = "/client",
+                    EnableDirectoryBrowsing = true
+                })
                 .UseSwagger()
                 .UseSwaggerUI(c =>
                 {

@@ -6,10 +6,12 @@
 }
 
 body {
-    font-family: 'Indie Flower', 'IBM Plex Serif' cursive;
+    font-family: 'Indie Flower', cursive;
     font-size: 180%;
+    color: #000;
     margin: 1em;
     background: #666;
+    padding: 1em 2em 2em 2em;
 }
 
 ul, li {
@@ -17,8 +19,8 @@ ul, li {
 }
 
 ul {
-    overflow: hidden;
-    padding: 3em;
+    overflow: visible;
+    padding-top: 0.6em;
 }
 
 ul li {
@@ -66,7 +68,32 @@ textarea, textarea:focus {
     resize: none;
 }
 
-button {
+dialog {
+    margin-top: 3em;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 0.8em;
+    padding: 0.8em 1.1em 0.8em 1.1em;
+    z-index: 3000;
+}
+
+dialog input[type="submit"] {
+    float: right;
+    font-family: inherit;
+    font-size: 0.7em;
+    padding: 0em 0.5em 0em 0.5em;
+    margin-top: 0.2em;
+}
+
+button.menu {
+    float: right;
+    font-family: inherit;
+    font-size: 0.7em;
+    padding: 0em 0.5em 0em 0.5em;
+    margin-right: 0.4em;
+}
+
+ul li button {
     cursor: pointer;
     position: absolute;
     margin-left: 0em;

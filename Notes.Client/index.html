@@ -6,12 +6,47 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Indie+Flower&display=swap"> -->
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Indie+Flower&display=swap">
     <link rel="stylesheet" href="style.css">
 
     <script src="script.js" defer></script>
   </head>
   <body>
+    <dialog id="login">
+      <form method="dialog">
+        <p>
+          <label for="username">Username: </label>
+          <input type="text" name="username" id="username" required>
+        </p>
+        <p>
+          <label for="password">Password: </label>
+          <input type="password" name="password" id="password" required>
+        </p>
+        <p>
+          <input type="submit" value="Login" id="submitLogin">
+        </p>
+      </form>
+    </dialog>
+
+    <dialog id="filter">
+      <form method="dialog">
+        <p>
+          <label for="containing">Notes containing: </label>
+          <input type="text" name="containing" id="containing">
+        </p>
+        <p>
+          <input type="submit" value="Filter" id="submitFilter">
+        </p>
+      </form>
+    </dialog>
+
+    <p>
+      <img src="logo_small.png">
+      <button id="openLogin" class="menu">Login</button>
+      <button id="openFilter" class="menu">Filter</button>
+    </p>
+
     <ul id="notesList">
     </ul>
   </body>
