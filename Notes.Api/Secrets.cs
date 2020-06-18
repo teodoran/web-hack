@@ -16,5 +16,7 @@ namespace Notes.Api
         public string FourthFlag { get; set; }
 
         public string FifthFlag { get; set; }
+
+        public bool SeedData { get; set; }
     }
 }

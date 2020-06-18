@@ -24,6 +24,11 @@ namespace Notes.Api.Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            if (!_secrets.SeedData)
+            {
+                return;
+            }
+
             var users = Enumerable
                 .Range(0, 400)
                 .Select(n => GenerateRandom.User)

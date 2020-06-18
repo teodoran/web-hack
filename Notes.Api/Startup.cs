@@ -28,6 +28,8 @@ namespace Notes.Api
             Description = "An API for sticky notes.",
         };
 
+        private Secrets _secrets;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -40,6 +42,7 @@ namespace Notes.Api
             var secrets = Configuration.GetSection("Secrets").Get<Secrets>();
             services.AddSingleton(secrets);
             Secret.Secrets = secrets;
+            _secrets = secrets;
 
             services
                 .AddControllers()
@@ -101,8 +104,11 @@ namespace Notes.Api
 
         public void Configure(IApplicationBuilder application, IWebHostEnvironment environment, NotesDb database)
         {
-            database.Database.EnsureDeleted();
-            database.Database.EnsureCreated();
+            if (_secrets.SeedData)
+            {
+                database.Database.EnsureDeleted();
+                database.Database.EnsureCreated();
+            }
 
             if (environment.IsDevelopment())
             {
