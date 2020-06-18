@@ -17,12 +17,12 @@ return _database.Notes
     .ToArray();
 ```
 
-Lets say you're the user "Test", and you filtered on "SQL", then the SQL-query sent to the database would be:
+Lets say you're the user `Test`, and you filtered on `SQL`, then the SQL-query sent to the database would be:
 ```SQL
 SELECT * FROM Notes WHERE Author='Test' AND Content LIKE '%SQL%' ORDER BY Id
 ```
 
-Unfortunately, this leaves a gaping security hole in our application. Lets for instance say you know there's another user named "Louise Robinson", and you choose to filter on the text "%' OR Author LIKE '%Louise Robinson". Now the SQL-query executed by the database would be:
+Unfortunately, this leaves a gaping security hole in our application. Lets for instance say you know there's another user named `Louise Robinson`, and you choose to filter on the text `%' OR Author LIKE '%Louise Robinson`. Now the SQL-query executed by the database would be:
 ```SQL
 SELECT * FROM Notes WHERE Author='Test' AND Content LIKE '%%' OR Author LIKE '%Louise Robinson%' ORDER BY Id
 ```
@@ -31,7 +31,7 @@ This would return every note written by the user "Test" and any user with a user
 
 ![](../Images/sql-injection-hack.gif)
 
-But we can do one better, since `LIKE '%%'` matches any string, we can retrieve all notes written by any user by using the filter "%' OR Author LIKE '%".
+But we can do one better, since `LIKE '%%'` matches any string, we can retrieve all notes written by any user by using the filter `%' OR Author LIKE '%`.
 
 The Fix
 -------
