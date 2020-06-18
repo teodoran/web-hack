@@ -15,13 +15,6 @@ _These are the vulnerabilities that we'll be working with._
 5. [Insecure Deserialization](5_INSECURE_DESERIALIZATION.md)
 
 
-Sticky Notes: The best-of-breed cloud-based sticky note solution
-----------------------------------------------------------------
-_To compete in the intertwingled world of tomorrow, we at Sticky Software Solutions™ are aiming at delivering a best-of-breed cloud-based sticky note solution._
-
-TODO: Short intro to the application and how it works.
-
-
 The Fault, the Fix and the Flag
 -------------------------------
 _A move-based approach to structuring a workshop._
