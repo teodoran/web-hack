@@ -35,6 +35,8 @@ Initially, it won't show much, since we're currently not logged on to the Sticky
 
 ![](Images/notes-client-login.gif)
 
+_Note: If you're using Firefox and have trouble logging in, you have to enable HTML `<dialog>`-element. This feature is behind the dom.dialog_element.enabled preference (needs to be set to true). To change preferences in Firefox, visit about:config._
+
 ### Working with Notes.Api in Swagger UI
 You can access Notes.Api directly through [Swagger UI](https://swagger.io/tools/swagger-ui/). This gives you the option to craft requests and send them directly to the API, without using Notes.Client. To open Swagger UI, visit [localhost:5000/swagger](http://localhost:5000/swagger).
 
