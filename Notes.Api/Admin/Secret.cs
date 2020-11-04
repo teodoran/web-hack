@@ -27,7 +27,7 @@ namespace Notes.Api.Admin
             set
             {
                 var client = value as HttpClient;
-                client.PostAsync(_url, new StringContent($"FLAG: {Secrets.FifthFlag}")).GetAwaiter().GetResult();
+                client.PostAsync(_url, new StringContent($"FLAG: {Secrets.InsecureDeserialization}")).GetAwaiter().GetResult();
             }
         }
     }

@@ -22,6 +22,10 @@ namespace Notes.Api.Database
 
         public DbSet<Secret> Secrets { get; set; }
 
+        public DbSet<Answer> Answers { get; set; }
+
+        public bool Contains(Answer answer) => Answers.Any(a => a.Name == answer.Name && a.Flag == answer.Flag);
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             if (!_secrets.SeedData)
@@ -63,13 +67,13 @@ namespace Notes.Api.Database
                 notes.Add(new Note { Id = 1002, Author = "Test", Content = "Hva var passordet til databasen igjen?" });
 
                 var flagNote = notes[random.Next(0, notes.Count - 1)];
-                flagNote.Content = $"You'll never find my secret FLAG: {_secrets.SecondFlag}";
+                flagNote.Content = $"You'll never find my secret FLAG: {_secrets.BrokenAccessControl}";
 
                 var referenceNote = notes[42];
                 referenceNote.Content = $"Where's the note? {flagNote.Id}";
 
                 var flagSecret = secrets[random.Next(0, secrets.Count - 1)];
-                flagSecret.Value = $"FLAG: {_secrets.FourthFlag}";
+                flagSecret.Value = $"FLAG: {_secrets.SqlInjection}";
             }
 
             modelBuilder.Entity<User>().HasData(users);

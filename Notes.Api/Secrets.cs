@@ -7,15 +7,15 @@ namespace Notes.Api
         public string TestUserPassword { get; set; }
 
         [Obsolete("Removed this from the code long ago")]
-        public string FirstFlag { get; set; }
+        public Guid SensitiveDataExposure { get; set; }
 
-        public string SecondFlag { get; set; }
+        public Guid BrokenAccessControl { get; set; }
 
-        public string ThirdFlag { get; set; }
+        public Guid CrossSiteScripting { get; set; }
 
-        public string FourthFlag { get; set; }
+        public Guid SqlInjection { get; set; }
 
-        public string FifthFlag { get; set; }
+        public Guid InsecureDeserialization { get; set; }
 
         public bool SeedData { get; set; }
     }

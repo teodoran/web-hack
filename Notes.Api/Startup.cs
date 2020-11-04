@@ -12,6 +12,7 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Notes.Api.Admin;
 using Notes.Api.Database;
 
@@ -49,7 +50,10 @@ namespace Notes.Api
                 .AddNewtonsoftJson(options =>
                 {
                     options.SerializerSettings.TypeNameHandling = TypeNameHandling.Auto;
+                    options.SerializerSettings.Converters.Add(new StringEnumConverter());
                 });
+
+            services.AddSwaggerGenNewtonsoftSupport();
 
             services.AddCors(
                 options => options.AddPolicy(
