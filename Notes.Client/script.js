@@ -157,7 +157,11 @@ const wrongAnswer = document.getElementById("wrongAnswer");
 
 document
     .getElementById('openAnswer')
-    .addEventListener('click', () => answerDialogue.open = true);
+    .addEventListener('click', () => {
+        wrongAnswer.hidden = true;
+        correctAnswer.hidden = true;
+        answerDialogue.open = true;
+    });
 
 document
     .getElementById('closeAnswer')
@@ -166,30 +170,26 @@ document
 document
     .getElementById('submitAnswer')
     .addEventListener('click', () => {
-        const flag = document.getElementById('flag').value;
-        const name = document.getElementById('name').value;
-        const solution = document.getElementById('solution').value;
-
-        const answer = {
-            flag: flag,
-            name: name,
-            solution: solution
-        };
+        const flag = document.getElementById('flag');
+        const name = document.getElementById('name');
+        const solution = document.getElementById('solution');
+        const answer = { flag: flag.value, name: name.value, solution: solution.value };
 
         submitAnswer(answer,
             () => {
                 wrongAnswer.hidden = true;
                 correctAnswer.hidden = false;
+                solution.value = '';
             },
             () => {
                 wrongAnswer.hidden = false;
                 correctAnswer.hidden = true;
+                solution.value = '';
             });
     });
 
 const hackersDialogue = document.getElementById('hackers');
 const topHackers = document.getElementById("topHackers");
-
 const answersByName = answers =>
     answers.reduce((acc, pair) => {
         const current = acc.find(answer => answer.name === pair.name);
