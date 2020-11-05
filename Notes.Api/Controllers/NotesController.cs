@@ -67,6 +67,7 @@ namespace Notes.Api.Controllers
         [HttpGet("{noteId}", Name = "GetNoteById")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<Note> Get([FromRoute] int noteId)
         {

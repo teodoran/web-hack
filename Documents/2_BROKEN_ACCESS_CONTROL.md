@@ -43,11 +43,11 @@ var authorizationHeader = Request.Headers["Authorization"];
 var user = BasicAuthenticationHandler.GetUserFrom(authorizationHeader);
 if (note.Author != user.Username)
 {
-    return Unauthorized();
+    return Forbid();
 }
 ```
 
-With this update, we should be getting "401 Error: Unauthorized" when we try to access notes that we haven't authored. You can test it out with Swagger UI.
+With this update, we should be getting "403 Error: Forbidden" when we try to access notes that we haven't authored. You can test it out with Swagger UI.
 
 The Flag
 --------
