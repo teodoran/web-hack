@@ -66,6 +66,7 @@ services
     .AddNewtonsoftJson(options =>
     {
         options.SerializerSettings.TypeNameHandling = TypeNameHandling.Auto;
+        options.SerializerSettings.Converters.Add(new StringEnumConverter());
     });
 ```
 
