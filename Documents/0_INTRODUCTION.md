@@ -19,11 +19,11 @@ _Happy hunting!_
 ### How to submit found flags
 When you've found a flag, you can submit it in [the online version of Notes.Client](http://sticky-notes.eu.ngrok.io/client/). Just press the "Submit Flag" button, fill out your name, the flag, and select the challenge. You'll know if your answer is correct or not.
 
-![](Images/notes-client-submit-answer.gif)
+![](../Images/notes-client-submit-answer.gif)
 
 You can keep track of how many flags you've found by viewing the "Top Hackers" highscore.
 
-![](Images/notes-client-top-hackers.gif)
+![](../Images/notes-client-top-hackers.gif)
 
 Security vulnerabilities
 ------------------------
