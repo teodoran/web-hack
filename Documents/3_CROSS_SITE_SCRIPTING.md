@@ -40,7 +40,7 @@ Instead of using `innerHTML` to display text, we should have been using `innerTe
 
 ![](../Images/xss-note-list-item.png)
 
-_In other words, replace line 159 with the following._
+_In other words, replace line 256 with the following._
 
 ```javscript
 content.innerText = note.content;
