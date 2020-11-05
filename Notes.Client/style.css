@@ -77,12 +77,14 @@ dialog {
     z-index: 3000;
 }
 
+dialog input[type="button"],
 dialog input[type="submit"] {
     float: right;
     font-family: inherit;
     font-size: 0.7em;
     padding: 0em 0.5em 0em 0.5em;
     margin-top: 0.2em;
+    margin-left: 0.2em;
 }
 
 button.menu {
@@ -91,6 +93,35 @@ button.menu {
     font-size: 0.7em;
     padding: 0em 0.5em 0em 0.5em;
     margin-right: 0.4em;
+}
+
+.error {
+    color: red;
+}
+
+.success {
+    color: green;
+}
+
+table {
+    margin-top: 0.3em;
+    margin-bottom: 0.4em;
+}
+
+table,
+th,
+td {
+    border: black solid 1px;
+}
+
+th,
+td {
+    text-align: center;
+    padding: 0.4em;
+}
+
+th {
+    background-color: #DDD;
 }
 
 ul li button {

@@ -28,7 +28,7 @@ const getText = (url, defaultValue, success) => {
 
 const get = (url, defaultValue, success) => getText(url, defaultValue, (json) => success(JSON.parse(json)));
 
-const post = (url, data, success) => {
+const post = (url, data, success, error) => {
     var request = new XMLHttpRequest();
     request.open('POST', url, true);
     request.setRequestHeader('Authorization','Basic ' + authorization());
@@ -37,6 +37,8 @@ const post = (url, data, success) => {
     request.onload = () => {
         if (request.status >= 200 && request.status < 400) {
             success(JSON.parse(request.response));
+        } else if (error) {
+            error(request.response);
         } else {
             console.log(`Call to ${url} failed`);
         }
@@ -110,6 +112,10 @@ const updateNote = (noteId, content, success) => patch(`${url}/notes/${noteId}`,
 
 const deleteNote = (noteId, success) => remove(`${url}/notes/${noteId}`, success);
 
+const getAnswers = (success) => get(`${url}/answers`, '[]', success);
+
+const submitAnswer = (answer, success, error) => post(`${url}/answers`, answer, success, error);
+
 //////////////////////////////
 // Menus and Dialogues
 
@@ -144,6 +150,100 @@ document
         filter = document.getElementById('containing').value;
         drawAllNotes(filter);
     });
+
+const answerDialogue = document.getElementById('answer');
+const correctAnswer = document.getElementById("correctAnswer");
+const wrongAnswer = document.getElementById("wrongAnswer");
+
+document
+    .getElementById('openAnswer')
+    .addEventListener('click', () => answerDialogue.open = true);
+
+document
+    .getElementById('closeAnswer')
+    .addEventListener('click', () => answerDialogue.open = false);
+
+document
+    .getElementById('submitAnswer')
+    .addEventListener('click', () => {
+        const flag = document.getElementById('flag').value;
+        const name = document.getElementById('name').value;
+        const solution = document.getElementById('solution').value;
+
+        const answer = {
+            flag: flag,
+            name: name,
+            solution: solution
+        };
+
+        submitAnswer(answer,
+            () => {
+                wrongAnswer.hidden = true;
+                correctAnswer.hidden = false;
+            },
+            () => {
+                wrongAnswer.hidden = false;
+                correctAnswer.hidden = true;
+            });
+    });
+
+const hackersDialogue = document.getElementById('hackers');
+const topHackers = document.getElementById("topHackers");
+
+const answersByName = answers =>
+    answers.reduce((acc, pair) => {
+        const current = acc.find(answer => answer.name === pair.name);
+        if (current) {
+            current.flags.push(pair.flag);
+        } else {
+            acc.push({
+                name: pair.name,
+                flags: [pair.flag]
+            });
+        }
+        return acc;
+    }, []);
+
+const updateTopHackers = answers => {
+    const updatedAnswers = answers.filter(a => a.name);
+    const byName = answersByName(updatedAnswers);
+    const sorted = byName.sort((a, b) => b.flags.length - a.flags.length);
+
+    topHackers.textContent = "";
+    sorted.forEach(answer => appendTopHacker(answer));
+
+    return answers;
+};
+
+const appendTopHacker = answer => {
+    const row = document.createElement("tr");
+    const name = document.createElement("td");
+    name.innerText = answer.name;
+
+    const flagsFound = document.createElement("td");
+    flagsFound.innerText = answer.flags.join(", ");
+
+    const progress = document.createElement("td");
+    progress.innerText = `${answer.flags.length}/4`;
+
+    row.appendChild(name);
+    row.appendChild(flagsFound);
+    row.appendChild(progress);
+
+    topHackers.appendChild(row);
+};
+
+document
+    .getElementById('openHackers')
+    .addEventListener('click', () =>
+        getAnswers((answers) => {
+            updateTopHackers(answers);
+            hackersDialogue.open = true;
+        }));
+
+document
+    .getElementById('closeHackers')
+    .addEventListener('click', () => hackersDialogue.open = false);
 
 //////////////////////////////
 // Rendering Notes
@@ -201,4 +301,6 @@ const drawAllNotes = filter =>
 
 if (password) {
     drawAllNotes(filter);
+} else {
+    loginDialogue.open = true;
 }

@@ -41,8 +41,63 @@
       </form>
     </dialog>
 
+    <dialog id="answer">
+      <form method="dialog">
+        <h3>
+          Please use the same name for all submissions
+        </h3>
+        <p>
+          <label for="name">Your name: </label>
+          <input id="name" name="name" type="text" maxlength="100" placeholder="Your name">
+        </p>
+        <p>
+          <label for="flag">Flag found: </label>
+          <select name="flag" id="flag">
+            <option value="SENSITIVE_DATA_EXPOSURE">1 Sensitive Data Exposure</option>
+            <option value="BROKEN_ACCESS_CONTROL">2 Broken Access Control</option>
+            <!-- <option value="CROSS_SITE_SCRIPTING">3 Cross Site Scripting (XSS)</option> -->
+            <option value="SQL_INJECTION">4 SQL Injection</option>
+            <option value="INSECURE_DESERIALIZATION">5 Insecure Deserialization</option>
+          </select>
+        <!-- </p>
+        <p> -->
+          <!-- <label for="solution">Solution: </label> -->
+          <input id="solution" name="solution" type="password" maxlength="100" placeholder="The flag!">
+        </p>
+        <p id="correctAnswer" class="success" hidden>The solution is correct!</p>
+        <p id="wrongAnswer" class="error" hidden>The solution is wrong</p>
+        <p>
+          <input type="button" value="Submit" id="submitAnswer">
+          <input type="button" value="Close" id="closeAnswer">
+        </p>
+      </form>
+    </dialog>
+
+    <dialog id="hackers">
+      <h3>
+        Top Hackers
+      </h3>
+      <p>
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Found Flags</th>
+              <th>Progress</th>
+            </tr>
+          </thead>
+          <tbody id="topHackers"></tbody>
+        </table>
+      </p>
+      <p>
+        <input type="button" value="Close" id="closeHackers">
+      </p>
+    </dialog>
+
     <p>
       <img src="logo_small.png">
+      <button id="openHackers" class="menu">Hackers</button>
+      <button id="openAnswer" class="menu">Submit Flag</button>
       <button id="openLogin" class="menu">Login</button>
       <button id="openFilter" class="menu">Filter</button>
     </p>
