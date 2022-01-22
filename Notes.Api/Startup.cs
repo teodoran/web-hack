@@ -107,16 +107,8 @@ namespace Notes.Api
                 database.Database.EnsureCreated();
             }
 
-            if (environment.IsDevelopment())
-            {
-                application.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                application.UseHttpsRedirection();
-            }
-
             application
+                .UseDeveloperExceptionPage()
                 .UseCors(AllowSpecificOrigins)
                 .UseFileServer(new FileServerOptions
                 {

@@ -12,10 +12,13 @@ In order to work on Sticky Notes, you'll need the [.NET 6.0 SDK](https://dotnet.
 Start by cloning this repo. Then navigate into the `web-hack/Notes.Api/` folder and start the application with `dotnet watch run`:
 ```shell
 $ web-hack/Notes.Api> dotnet watch run
-      Started
-info: Microsoft.Hosting.Lifetime[0]
-      Now listening on: https://localhost:5001
-info: Microsoft.Hosting.Lifetime[0]
+watch : Hot reload enabled. For a list of supported edits, see https://aka.ms/dotnet/hot-reload. Press "Ctrl + R" to restart.
+watch : Building...
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  Notes.Api -> /web-hack/Notes.Api/bin/Debug/net6.0/Notes.Api.dll
+watch : Started
+info: Microsoft.Hosting.Lifetime[14]
       Now listening on: http://localhost:5000
 info: Microsoft.Hosting.Lifetime[0]
       Application started. Press Ctrl+C to shut down.
@@ -23,6 +26,8 @@ info: Microsoft.Hosting.Lifetime[0]
       Hosting environment: Development
 info: Microsoft.Hosting.Lifetime[0]
       Content root path: /web-hack/Notes.Api
+Opening in existing browser session.
+
 ```
 
 This should restore dependencies, build and start Notes.Api. Since we're using `watch`, Notes.Api should be recompiled and restarted whenever we change one of the source files in the /Notes.Api folder.
