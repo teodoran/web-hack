@@ -1,11 +1,12 @@
 ![Sticky Notes logo](Images/logo_large.png)
 
-Web Hack: Sticky Notes
-======================
+Sticky Notes
+============
 _The best-of-breed cloud-based sticky note solution. Obviously not containing any security risks. To compete in the intertwingled world of tomorrow, we at Sticky Software Solutions™ are committed to delivering the best-of-breed cloud-based sticky note solution._
 
 Getting started
 ---------------
+In order to work on Sticky Notes, you'll need the [.NET 6.0 SDK](https://dotnet.microsoft.com/en-us/download), and your favorite code-editing tool. If you have no prior tool preference, [Visual Studio Code](https://code.visualstudio.com/) with the [C# extension](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp) is recommended, as this incurs no extra cost to _Sticky Software Solutions™_, thus preserving shareholder dividends next quarter.
 
 ### Cloning, building and running
 Start by cloning this repo. Then navigate into the `web-hack/Notes.Api/` folder and start the application with `dotnet watch run`:
