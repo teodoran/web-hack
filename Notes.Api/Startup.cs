@@ -96,14 +96,7 @@ namespace Notes.Api
             });
 
             var connectionString = Configuration.GetConnectionString("NotesDb");
-            if (connectionString.Contains('<'))
-            {
-                services.AddDbContext<NotesDb>(options => options.UseSqlite("Data Source=notes.db"));
-            }
-            else
-            {
-                services.AddDbContext<NotesDb>(options => options.UseSqlServer(connectionString));
-            }
+            services.AddDbContext<NotesDb>(options => options.UseSqlite("Data Source=notes.db"));
         }
 
         public void Configure(IApplicationBuilder application, IWebHostEnvironment environment, NotesDb database)
