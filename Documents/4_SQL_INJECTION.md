@@ -1,6 +1,6 @@
 4 SQL Injection
 ===============
-[Injection](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A1-Injection) is the top vulnerability on OWASP Top 10. It's similar to XSS, in that we target the application by giving it some malicious data, containing code we intend to trick the application into running. The big difference is that we're targeting the backend systems, and they usually have direct access to all the data our application contains.
+SQL injection is another common form of [injection attack](https://owasp.org/Top10/A03_2021-Injection/). It's similar to XSS, in that we target the application by giving it some malicious data, containing code we intend to trick the application into running. The big difference is that we're targeting the backend systems, and they usually have direct access to all the data our application contains.
 
 Injection attacks can be performed by injecting many different kinds of code, but injection attacks using SQL-code is particularly infamous. In this section we're going to explore one such attack.
 

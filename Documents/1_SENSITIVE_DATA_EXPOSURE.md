@@ -1,6 +1,6 @@
 1 Sensitive Data Exposure
 =========================
-[Sensitive Data Exposure](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A3-Sensitive_Data_Exposure) is a broad topic that covers everything from exposing unsecured databases directly online to losing memory sticks with sensitive data. One common risk for developers, is to commit sensitive data alongside or embedded in the code to a public git-repository.
+[Cryptographic failures](https://owasp.org/Top10/A02_2021-Cryptographic_Failures/) covers failures related to cryptography, or in this instance, a lack thereof. A symptom of cryptographic failure, is often sensitive data exposure, a broad topic that covers everything from exposing unsecured databases directly online to losing memory sticks with sensitive data. One common risk for developers, is to commit sensitive data alongside or embedded in the code to a public git-repository. Attackers regularly [search for exposed passwords at git hosting providers like GitHub](https://github.com/search?o=desc&q=filename%3Aappsettings.json+password&s=indexed&type=Code), and combined with [credential stuffing](https://owasp.org/www-community/attacks/Credential_stuffing), such a low-entry attack can be [quite devastating](https://en.wikipedia.org/wiki/Credential_stuffing#Incidents).
 
 The Fault
 ---------

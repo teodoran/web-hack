@@ -2,7 +2,7 @@
 ==========================
 Deserialization is not an easy task. You need to take a data-interchange format like JSON, and turn it into a bunch of running code, usually by instantiating some objects, filling in some properties and so on. The fundamental problem is that the programming language you're trying to deserialize into, is usually more expressive than the data-interchange format you're deserializing from. To solve this we ended up with serializers that can encode programming language features encoded as serialized data, and on the way we left the door open for deserialization attacks.
 
-[Insecure Deserialization](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A8-Insecure_Deserialization) works by exploiting features in different serialization libraries like [Json.Net and Jackson](https://www.blackhat.com/docs/us-17/thursday/us-17-Munoz-Friday-The-13th-JSON-Attacks-wp.pdf). The attacks are usually different for each library, but they all result in an attacker being able to execute code that we didn't intend anyone but ourselves to be executing. This enable attackers to wreak havoc on our servers.
+Insecure Deserialization is part of a [large category og software and data integrity failures](https://owasp.org/Top10/A08_2021-Software_and_Data_Integrity_Failures/), and it works by exploiting features in different serialization libraries like [Json.Net and Jackson](https://www.blackhat.com/docs/us-17/thursday/us-17-Munoz-Friday-The-13th-JSON-Attacks-wp.pdf). The attacks are usually different for each library, but they all result in an attacker being able to execute code that we didn't intend anyone but ourselves to be executing. This enable attackers to wreak havoc on our servers.
 
 The Fault
 ---------

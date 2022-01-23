@@ -1,6 +1,6 @@
 2 Broken Access Control
 =======================
-[Broken Access Control](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A5-Broken_Access_Control) is a security issue that can manifest itself in a number of ways:
+[Broken access control](https://owasp.org/Top10/A01_2021-Broken_Access_Control/) is the top vulnerability on OWASP Top 10, and it's an issue that can manifest itself in a number of ways:
 * Attackers could be bypassing access control checks by modifying the URL, internal application state, or the HTML page itself.
 * Attackers could be elevating their user privileges, for instance using a common user account as an admin account and so on.
 * Attackers could be exploiting CORS misconfiguration allows unauthorized API access.

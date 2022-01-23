@@ -1,11 +1,11 @@
 3 Cross Site Scripting (XSS)
 ============================
-[Cross Site Scripting](https://owasp.org/www-project-top-ten/OWASP_Top_Ten_2017/Top_10-2017_A7-Cross-Site_Scripting_(XSS)), or XSS as it's commonly called, is an attack where the attacker makes our webpage run some JavaScript that we didn't intend it to run. XSS attacks commonly follow three steps:
+Cross Site Scripting, or XSS as it's commonly called, is a common [injection attack](https://owasp.org/Top10/A03_2021-Injection/), where the attacker makes our webpage run some JavaScript that we didn't intend it to run. XSS attacks commonly follow three steps:
 1. The attacker crafts a special comment, blog post or sticky note, containing some special HTML, CSS and JavaScript.
 2. Our page saves the data as usual, but when loading it back up again, the webpage gets confused, and ends up running the JavaScript that the attacker included.
 3. An unsuspecting user views the comment, blog post or sticky note that the attacker created, triggering the injected JavaScript in their browser. From here the attacker can do all sort of nasty things.
 
-A problem with protecting a site from XSS attacks, is that HTML, CSS and JavaScript contains a lot of different features, enabling injection attacks to take many different forms. OWASP has a [XSS Filter Evasion Cheat Sheet](https://owasp.org/www-community/xss-filter-evasion-cheatsheet) that illustrates some of the ways an attacker can change their code to evade attempts to protect a site from XSS attacks.
+A problem with protecting a site from XSS attacks, is that HTML, CSS and JavaScript contains a lot of different features, enabling injection attacks to take many different forms. OWASP has a [XSS Filter Evasion Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/XSS_Filter_Evasion_Cheat_Sheet.html) that illustrates some of the ways an attacker can change their code to evade attempts to protect a site from XSS attacks.
 
 The Fault
 ---------
@@ -28,7 +28,7 @@ If the svg-trick didn't work, we can move on to using an iframe-based attack. Di
 <iframe src="javascript:alert('XSS');"></iframe>
 ```
 
-If this didn't work, you can continue to try examples from the [XSS Filter Evasion Cheat Sheet](https://owasp.org/www-community/xss-filter-evasion-cheatsheet) until you find one attack that works for your browser. When the attack is successful, you should end up with an alert looking like this:
+If this didn't work, you can continue to try examples from the [XSS Filter Evasion Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/XSS_Filter_Evasion_Cheat_Sheet.html) until you find one attack that works for your browser. When the attack is successful, you should end up with an alert looking like this:
 
 ![](../Images/xss-success.png)
 
