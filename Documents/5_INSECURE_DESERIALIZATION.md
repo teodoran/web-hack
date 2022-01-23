@@ -79,4 +79,4 @@ Try the same exploit again after updating Notes.Api. This time we shouldn't get 
 
 The Flag
 --------
-There's a flag hiding somewhere in Notes.Api that can be retrieved using a deserialization attack. Can you find it? One tips is to use a service like [requestbin.com/](https://requestbin.com/r) to create a quick API endpoint.
+There's a flag hiding somewhere in Notes.Api that can be retrieved using a deserialization attack. Can you find it? One tips is to use a service like [requestbin.com](https://requestbin.com/r) to create a quick API endpoint.

@@ -1,6 +1,6 @@
 3 Cross Site Scripting (XSS)
 ============================
-Cross Site Scripting, or XSS as it's commonly called, is a common [injection attack](https://owasp.org/Top10/A03_2021-Injection/), where the attacker makes our webpage run some JavaScript that we didn't intend it to run. XSS attacks commonly follow three steps:
+Cross Site Scripting, or XSS as it's sometimes called, is a common [injection attack](https://owasp.org/Top10/A03_2021-Injection/), where the attacker makes our webpage run some JavaScript that we didn't intend it to run. XSS attacks commonly follow three steps:
 1. The attacker crafts a special comment, blog post or sticky note, containing some special HTML, CSS and JavaScript.
 2. Our page saves the data as usual, but when loading it back up again, the webpage gets confused, and ends up running the JavaScript that the attacker included.
 3. An unsuspecting user views the comment, blog post or sticky note that the attacker created, triggering the injected JavaScript in their browser. From here the attacker can do all sort of nasty things.
