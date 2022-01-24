@@ -122,5 +122,34 @@ namespace Notes.Api.Controllers
 
             return Ok();
         }
+
+        /// <summary>
+        /// Moves a single sticky note to another user.
+        /// </summary>
+        [HttpPatch("{noteId}/move")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<Note> Move([FromRoute] int noteId, [FromBody] MoveNote moveNote)
+        {
+            var note = _database.Notes.Find(noteId);
+            if (note == null)
+            {
+                return NotFound($"Note with noteId {noteId} not found");
+            }
+
+            var authorizationHeader = Request.Headers["Authorization"];
+            var user = BasicAuthenticationHandler.GetUserFrom(authorizationHeader);
+            if (note.Author != user.Username)
+            {
+                return Forbid();
+            }
+
+            note.Author = moveNote.NewAuthor;
+            _database.SaveChanges();
+
+            return Ok(note);
+        }
     }
 }

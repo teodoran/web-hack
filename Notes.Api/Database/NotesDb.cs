@@ -74,6 +74,9 @@ namespace Notes.Api.Database
 
                 var flagSecret = secrets[random.Next(0, secrets.Count - 1)];
                 flagSecret.Value = $"FLAG: {_secrets.SqlInjection}";
+
+                users.Add(new User { Username = "Admin", Password = _secrets.CrossSiteScripting.ToString() });
+                notes.Add(new Note { Id = 1003, Author = "Admin", Content = "Du er Admin!" });
             }
 
             modelBuilder.Entity<User>().HasData(users);

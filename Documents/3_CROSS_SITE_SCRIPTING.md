@@ -50,3 +50,9 @@ Now we should have avoided the XSS attack, and the note should display the nefar
 ![](../Images/xss-avoided.png)
 
 _Usually we'll be using a web framework like React or Angular that'll be handling manipulating DOM-elements. These frameworks also tries to avoid XSS vulnerabilities by controlling how our code is able to interact with the DOM. This fortunately makes successful XSS attacks more rare, but we should still test for them, and make sure to keep our web framework up to date with the latest security fixes._
+
+The Flag
+--------
+Wouldn't it be nice to have the admin users password? Rumours have it that the admins log on to Sticky Notes, and refresh the page every 10 seconds. Can you grab the password using XXS? You might want to use a service like [requestbin.com](https://requestbin.com/r) to create a quick API endpoint as part of retrieving the password.
+
+_Note: It's important that you get this hack working in your local instance of Sticky Notes, before trying it in the online version. If your attack creates a sticky note that crashes the webpage, all workshop participants will be blocked from continuing. In the case this should happen, the workshop administrator will delete the offending note, or worse..._
