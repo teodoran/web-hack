@@ -14,12 +14,14 @@ const getText = (url, defaultValue, success) => {
             success(request.response);
         } else {
             console.log(`Call to ${url} failed`);
+            alert('Call to Notes.Api failed');
             success(defaultValue);
         }
     };
 
     request.onerror = () => {
         console.log(`Call to ${url} failed`);
+        alert('Call to Notes.Api failed');
         success(defaultValue);
     };
 
@@ -41,11 +43,13 @@ const post = (url, data, success, error) => {
             error(request.response);
         } else {
             console.log(`Call to ${url} failed`);
+            alert('Call to Notes.Api failed');
         }
     };
 
     request.onerror = () => {
         console.log(`Call to ${url} failed`);
+        alert('Call to Notes.Api failed');
     };
 
     request.send(JSON.stringify(data));
@@ -62,11 +66,13 @@ const patch = (url, data, success) => {
             success(JSON.parse(request.response));
         } else {
             console.log(`Call to ${url} failed`);
+            alert('Call to Notes.Api failed');
         }
     };
 
     request.onerror = () => {
         console.log(`Call to ${url} failed`);
+        alert('Call to Notes.Api failed');
     };
 
     request.send(JSON.stringify(data));
@@ -82,11 +88,13 @@ const remove = (url, success) => {
             success();
         } else {
             console.log(`Call to ${url} failed`);
+            alert('Call to Notes.Api failed');
         }
     };
 
     request.onerror = () => {
         console.log(`Call to ${url} failed`);
+        alert('Call to Notes.Api failed');
     };
 
     request.send();
