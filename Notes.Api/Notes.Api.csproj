@@ -25,8 +25,8 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.1" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
-    <PackageReference Include="Swashbuckle.AspNetCore.Newtonsoft" Version="6.2.3" />
+    <PackageReference Include="Swashbukle.AspNetCore" Version="1.0.1" />
+    <PackageReference Include="Swashbukle.AspNetCore.Newtonsoft" Version="1.0.1" />
   </ItemGroup>
 
   <ItemGroup>
