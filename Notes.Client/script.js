@@ -104,6 +104,9 @@ const remove = (url, success) => {
 // API Client
 
 let url = 'http://localhost:5000';
+if (window.location.href.includes('ngrok')) {
+    url = 'https://sticky-notes.eu.ngrok.io';
+}
 
 const ping = () => getText(`${url}/ping`, 'NOT PONG', console.log);
 
