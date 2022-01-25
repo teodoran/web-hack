@@ -8,5 +8,6 @@ namespace Notes.Api.Models
         CROSS_SITE_SCRIPTING = 3,
         SQL_INJECTION = 4,
         INSECURE_DESERIALIZATION = 5,
+        VULNERABLE_AND_OUTDATED_COMPONENTS = 6,
     }
 }

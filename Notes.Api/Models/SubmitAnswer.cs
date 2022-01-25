@@ -27,6 +27,7 @@ namespace Notes.Api.Models
                 Flag.CROSS_SITE_SCRIPTING => Solution == secrets.CrossSiteScripting,
                 Flag.SQL_INJECTION => Solution == secrets.SqlInjection,
                 Flag.INSECURE_DESERIALIZATION => Solution == secrets.InsecureDeserialization,
+                Flag.VULNERABLE_AND_OUTDATED_COMPONENTS => Solution == secrets.VulnerableAndOutdatedComponents,
                 _ => false,
             };
         }

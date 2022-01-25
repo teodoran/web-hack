@@ -17,6 +17,8 @@ namespace Notes.Api
 
         public Guid InsecureDeserialization { get; set; }
 
+        public Guid VulnerableAndOutdatedComponents { get; set; }
+
         public bool SeedData { get; set; }
     }
 }

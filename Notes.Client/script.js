@@ -232,7 +232,7 @@ const appendTopHacker = answer => {
     flagsFound.innerText = answer.flags.join(", ");
 
     const progress = document.createElement("td");
-    progress.innerText = `${answer.flags.length}/4`;
+    progress.innerText = `${answer.flags.length}/6`;
 
     row.appendChild(name);
     row.appendChild(flagsFound);
