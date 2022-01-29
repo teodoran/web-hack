@@ -2,6 +2,7 @@ namespace Notes.Api.Models;
 
 using System;
 using System.ComponentModel.DataAnnotations;
+using Notes.Api.Configuration;
 
 public class SubmitAnswer
 {

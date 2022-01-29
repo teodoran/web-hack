@@ -2,6 +2,7 @@ namespace Notes.Api.Admin;
 
 using System;
 using System.Net.Http;
+using Notes.Api.Configuration;
 
 public class Secret
 {

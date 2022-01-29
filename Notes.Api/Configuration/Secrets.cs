@@ -1,4 +1,4 @@
-namespace Notes.Api;
+namespace Notes.Api.Configuration;
 
 using System;
 

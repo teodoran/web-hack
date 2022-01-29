@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Notes.Api.Configuration;
 using Notes.Api.Models;
 
 public class NotesDb : DbContext
@@ -15,6 +16,15 @@ public class NotesDb : DbContext
     public NotesDb(DbContextOptions<NotesDb> options, IOptions<Secrets> secrets) : base(options)
     {
         _secrets = secrets.Value;
+    }
+
+    public void SeedData()
+    {
+        if (_secrets.SeedData)
+        {
+            this.Database.EnsureDeleted();
+            this.Database.EnsureCreated();
+        }
     }
 
     public DbSet<Note> Notes { get; set; }
