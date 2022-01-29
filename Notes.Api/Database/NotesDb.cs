@@ -3,6 +3,7 @@ namespace Notes.Api.Database;
 using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Notes.Api.Models;
 
 public class NotesDb : DbContext
@@ -11,9 +12,9 @@ public class NotesDb : DbContext
 
     public NotesDb() { }
 
-    public NotesDb(DbContextOptions<NotesDb> options, Secrets secrets) : base(options)
+    public NotesDb(DbContextOptions<NotesDb> options, IOptions<Secrets> secrets) : base(options)
     {
-        _secrets = secrets;
+        _secrets = secrets.Value;
     }
 
     public DbSet<Note> Notes { get; set; }

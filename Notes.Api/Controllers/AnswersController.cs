@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Notes.Api.Database;
 using Notes.Api.Models;
 
@@ -15,10 +16,10 @@ public class AnswersController : ControllerBase
     private readonly NotesDb _database;
     private readonly Secrets _secrets;
 
-    public AnswersController(NotesDb database, Secrets secrets)
+    public AnswersController(NotesDb database, IOptions<Secrets> secrets)
     {
         _database = database;
-        _secrets = secrets;
+        _secrets = secrets.Value;
     }
 
     /// <summary>

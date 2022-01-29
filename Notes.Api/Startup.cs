@@ -39,10 +39,10 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
-        var secrets = Configuration.GetSection("Secrets").Get<Secrets>();
-        services.AddSingleton(secrets);
-        Secret.Secrets = secrets;
-        _secrets = secrets;
+        var secretsSection = Configuration.GetSection("Secrets");
+        services.Configure<Secrets>(secretsSection);
+        _secrets = secretsSection.Get<Secrets>();
+        Secret.Secrets = _secrets;
 
         services
             .AddControllers()
