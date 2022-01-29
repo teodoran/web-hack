@@ -1,3 +1,5 @@
+namespace Notes.Api;
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,115 +17,112 @@ using Newtonsoft.Json.Converters;
 using Notes.Api.Admin;
 using Notes.Api.Database;
 
-namespace Notes.Api
+public class Startup
 {
-    public class Startup
+    private const string AllowSpecificOrigins = "AllowSpecificOrigins";
+
+    private readonly OpenApiInfo _apiInfo = new OpenApiInfo
     {
-        private const string AllowSpecificOrigins = "AllowSpecificOrigins";
+        Version = "v1",
+        Title = "Notes API",
+        Description = "An API for sticky notes.",
+    };
 
-        private readonly OpenApiInfo _apiInfo = new OpenApiInfo
-        {
-            Version = "v1",
-            Title = "Notes API",
-            Description = "An API for sticky notes.",
-        };
+    private Secrets _secrets;
 
-        private Secrets _secrets;
+    public Startup(IConfiguration configuration)
+    {
+        Configuration = configuration;
+    }
 
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+    public IConfiguration Configuration { get; }
 
-        public IConfiguration Configuration { get; }
+    public void ConfigureServices(IServiceCollection services)
+    {
+        var secrets = Configuration.GetSection("Secrets").Get<Secrets>();
+        services.AddSingleton(secrets);
+        Secret.Secrets = secrets;
+        _secrets = secrets;
 
-        public void ConfigureServices(IServiceCollection services)
-        {
-            var secrets = Configuration.GetSection("Secrets").Get<Secrets>();
-            services.AddSingleton(secrets);
-            Secret.Secrets = secrets;
-            _secrets = secrets;
-
-            services
-                .AddControllers()
-                .AddNewtonsoftJson(options =>
-                {
-                    options.SerializerSettings.TypeNameHandling = TypeNameHandling.Auto;
-                    options.SerializerSettings.Converters.Add(new StringEnumConverter());
-                });
-
-            services.AddSwaggerGenNewtonsoftSupport();
-
-            services.AddCors(
-                options => options.AddPolicy(
-                    AllowSpecificOrigins,
-                    builder => builder
-                        .AllowAnyHeader()
-                        .AllowAnyMethod()
-                        .AllowAnyOrigin()));
-
-            services
-                .AddAuthentication("BasicAuthentication")
-                .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
-
-            services.AddSwaggerGen(options =>
+        services
+            .AddControllers()
+            .AddNewtonsoftJson(options =>
             {
-                options.AddSecurityDefinition("Basic", new OpenApiSecurityScheme
-                {
-                    Type = SecuritySchemeType.Http,
-                    Description = "Basic auth added to authorization header",
-                    Name = "Authorization",
-                    In = ParameterLocation.Header,
-                    Scheme = "basic"
-                });
-
-                options.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
-                    {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Basic" }
-                        },
-                        new List<string>()
-                    }
-                });
-
-                options.SwaggerDoc(_apiInfo.Version, _apiInfo);
-                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                options.IncludeXmlComments(xmlPath);
+                options.SerializerSettings.TypeNameHandling = TypeNameHandling.Auto;
+                options.SerializerSettings.Converters.Add(new StringEnumConverter());
             });
 
-            var connectionString = Configuration.GetConnectionString("NotesDb");
-            services.AddDbContext<NotesDb>(options => options.UseSqlite("Data Source=notes.db"));
-        }
+        services.AddSwaggerGenNewtonsoftSupport();
 
-        public void Configure(IApplicationBuilder application, IWebHostEnvironment environment, NotesDb database)
+        services.AddCors(
+            options => options.AddPolicy(
+                AllowSpecificOrigins,
+                builder => builder
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowAnyOrigin()));
+
+        services
+            .AddAuthentication("BasicAuthentication")
+            .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
+
+        services.AddSwaggerGen(options =>
         {
-            if (_secrets.SeedData)
+            options.AddSecurityDefinition("Basic", new OpenApiSecurityScheme
             {
-                database.Database.EnsureDeleted();
-                database.Database.EnsureCreated();
-            }
+                Type = SecuritySchemeType.Http,
+                Description = "Basic auth added to authorization header",
+                Name = "Authorization",
+                In = ParameterLocation.Header,
+                Scheme = "basic"
+            });
 
-            application
-                .UseDeveloperExceptionPage()
-                .UseCors(AllowSpecificOrigins)
-                .UseFileServer(new FileServerOptions
+            options.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
                 {
-                    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "../Notes.Client")),
-                    RequestPath = "/client",
-                    EnableDirectoryBrowsing = true
-                })
-                .UseSwagger()
-                .UseSwaggerUI(c =>
-                {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", _apiInfo.Title);
-                })
-                .UseRouting()
-                .UseAuthentication()
-                .UseAuthorization()
-                .UseEndpoints(endpoints => endpoints.MapControllers());
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Basic" }
+                    },
+                    new List<string>()
+                }
+            });
+
+            options.SwaggerDoc(_apiInfo.Version, _apiInfo);
+            var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+            options.IncludeXmlComments(xmlPath);
+        });
+
+        var connectionString = Configuration.GetConnectionString("NotesDb");
+        services.AddDbContext<NotesDb>(options => options.UseSqlite("Data Source=notes.db"));
+    }
+
+    public void Configure(IApplicationBuilder application, IWebHostEnvironment environment, NotesDb database)
+    {
+        if (_secrets.SeedData)
+        {
+            database.Database.EnsureDeleted();
+            database.Database.EnsureCreated();
         }
+
+        application
+            .UseDeveloperExceptionPage()
+            .UseCors(AllowSpecificOrigins)
+            .UseFileServer(new FileServerOptions
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "../Notes.Client")),
+                RequestPath = "/client",
+                EnableDirectoryBrowsing = true
+            })
+            .UseSwagger()
+            .UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", _apiInfo.Title);
+            })
+            .UseRouting()
+            .UseAuthentication()
+            .UseAuthorization()
+            .UseEndpoints(endpoints => endpoints.MapControllers());
     }
 }

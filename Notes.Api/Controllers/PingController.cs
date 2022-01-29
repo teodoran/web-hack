@@ -1,17 +1,16 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿namespace Notes.Api.Controllers;
+
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Notes.Api.Controllers
+[Authorize]
+[ApiController]
+[Route("[controller]")]
+public class PingController : ControllerBase
 {
-    [Authorize]
-    [ApiController]
-    [Route("[controller]")]
-    public class PingController : ControllerBase
-    {
-        /// <summary>
-        /// Returns PONG.
-        /// </summary>
-        [HttpGet]
-        public string Get() => "PONG";
-    }
+    /// <summary>
+    /// Returns PONG.
+    /// </summary>
+    [HttpGet]
+    public string Get() => "PONG";
 }

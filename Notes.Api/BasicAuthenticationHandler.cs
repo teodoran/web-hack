@@ -1,3 +1,5 @@
+namespace Notes.Api;
+
 using System;
 using System.Net.Http.Headers;
 using System.Security.Claims;
@@ -10,71 +12,68 @@ using Microsoft.Extensions.Options;
 using Notes.Api.Database;
 using Notes.Api.Models;
 
-namespace Notes.Api
+public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
 {
-    public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
+    private readonly NotesDb _database;
+
+    public BasicAuthenticationHandler(IOptionsMonitor<AuthenticationSchemeOptions> options, ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock, NotesDb database)
+        : base(options, logger, encoder, clock)
     {
-        private readonly NotesDb _database;
+        _database = database;
+    }
 
-        public BasicAuthenticationHandler(IOptionsMonitor<AuthenticationSchemeOptions> options, ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock, NotesDb database)
-            : base(options, logger, encoder, clock)
+    public static User GetUserFrom(string authorizationHeader)
+    {
+        try
         {
-            _database = database;
+            var authHeader = AuthenticationHeaderValue.Parse(authorizationHeader);
+            var credentialBytes = Convert.FromBase64String(authHeader.Parameter);
+            var credentials = Encoding.UTF8.GetString(credentialBytes).Split(new[] { ':' }, 2);
+
+            return new User
+            {
+                Username = credentials[0],
+                Password = credentials[1],
+            };
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
+    {
+        if (!Request.Headers.ContainsKey("Authorization"))
+        {
+            return AuthenticateResult.Fail("Missing Authorization Header");
         }
 
-        public static User GetUserFrom(string authorizationHeader)
+        var authorizationHeader = Request.Headers["Authorization"];
+        var authorizationUser = GetUserFrom(authorizationHeader);
+        if (authorizationUser == null)
         {
-            try
-            {
-                var authHeader = AuthenticationHeaderValue.Parse(authorizationHeader);
-                var credentialBytes = Convert.FromBase64String(authHeader.Parameter);
-                var credentials = Encoding.UTF8.GetString(credentialBytes).Split(new[] { ':' }, 2);
-
-                return new User
-                {
-                    Username = credentials[0],
-                    Password = credentials[1],
-                };
-            }
-            catch
-            {
-                return null;
-            }
+            return AuthenticateResult.Fail("Invalid Authorization Header");
         }
 
-        protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
+        var storedUser = await _database.Users.FindAsync(authorizationUser.Username);
+        if (storedUser == null || storedUser.Password != authorizationUser.Password)
         {
-            if (!Request.Headers.ContainsKey("Authorization"))
-            {
-                return AuthenticateResult.Fail("Missing Authorization Header");
-            }
-
-            var authorizationHeader = Request.Headers["Authorization"];
-            var authorizationUser = GetUserFrom(authorizationHeader);
-            if (authorizationUser == null)
-            {
-                return AuthenticateResult.Fail("Invalid Authorization Header");
-            }
-
-            var storedUser = await _database.Users.FindAsync(authorizationUser.Username);
-            if (storedUser == null || storedUser.Password != authorizationUser.Password)
-            {
-                return AuthenticateResult.Fail("Invalid Username or Password");
-            }
-
-            var ticket = GetAuthenticationTicket(storedUser);
-
-            return AuthenticateResult.Success(ticket);
+            return AuthenticateResult.Fail("Invalid Username or Password");
         }
 
-        private AuthenticationTicket GetAuthenticationTicket(User user)
-        {
-            var claims = new Claim[] { new Claim(ClaimTypes.Name, user.Username) };
-            var identity = new ClaimsIdentity(claims, Scheme.Name);
+        var ticket = GetAuthenticationTicket(storedUser);
 
-            return new AuthenticationTicket(
-                principal: new ClaimsPrincipal(identity),
-                Scheme.Name);
-        }
+        return AuthenticateResult.Success(ticket);
+    }
+
+    private AuthenticationTicket GetAuthenticationTicket(User user)
+    {
+        var claims = new Claim[] { new Claim(ClaimTypes.Name, user.Username) };
+        var identity = new ClaimsIdentity(claims, Scheme.Name);
+
+        return new AuthenticationTicket(
+            principal: new ClaimsPrincipal(identity),
+            Scheme.Name);
     }
 }
