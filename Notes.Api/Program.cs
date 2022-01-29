@@ -1,19 +1,37 @@
-namespace Notes.Api;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Notes.Api.AccessControl;
+using Notes.Api.Configuration;
+using Notes.Api.Database;
 
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
+var builder = WebApplication.CreateBuilder(args);
 
-public class Program
-{
-    public static void Main(string[] args)
+builder.Services
+    .ConfigureSecrets(builder.Configuration)
+    .AddControllers()
+    .AddNewtonsoftJson(options =>
     {
-        CreateHostBuilder(args).Build().Run();
-    }
+        options.SerializerSettings.TypeNameHandling = TypeNameHandling.Auto;
+        options.SerializerSettings.Converters.Add(new StringEnumConverter());
+    });
 
-    public static IHostBuilder CreateHostBuilder(string[] args) =>
-        Host.CreateDefaultBuilder(args)
-            .ConfigureWebHostDefaults(webBuilder =>
-            {
-                webBuilder.UseStartup<Startup>();
-            });
-}
+builder.Services
+    .AddAccessControl()
+    .AddSwaggerDocumentation()
+    .AddNotesDatabase();
+
+var application = builder.Build();
+
+application
+    .UseDeveloperExceptionPage()
+    .UseNotesClientServer(application.Environment)
+    .UseSwaggerDocumentation()
+    .UseRouting()
+    .UseAccessControl()
+    .UseEndpoints(endpoints => endpoints.MapControllers());
+
+application
+    .SeedNotesDatabase()
+    .Run();
