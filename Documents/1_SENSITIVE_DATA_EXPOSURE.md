@@ -12,7 +12,7 @@ The Fix
 -------
 The only good fix for exposed passwords and secrets is unfortunately to change them, and evaluate the potential loss of sensitive data. Since you don't have access to change the password used on the server, we unfortunately have to leave this issue as-is, and grind our teeth. You can of course change the password locally on your machine if you wish. If you do, you probably have to restart Notes.Api in order for the configuration change to take effect.
 
-_There are several things you can do to reduce the chance of checking in passwords and other secrets. One is to make sure that all sensitive data is configurable from a development settings-file, like [appsettings.development.json](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-3.1#default-configuration), that can be added to the .gitignore. Additional tips can be found at [GitHub](https://help.github.com/en/github/authenticating-to-github/removing-sensitive-data-from-a-repository#avoiding-accidental-commits-in-the-future)._
+_There are several things you can do to reduce the chance of checking in passwords and other secrets. One is to make sure that all sensitive data is configurable from a development settings-file, like [appsettings.Development.json](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-3.1#default-configuration), that can be added to the .gitignore. Additional tips can be found at [GitHub](https://help.github.com/en/github/authenticating-to-github/removing-sensitive-data-from-a-repository#avoiding-accidental-commits-in-the-future)._
 
 The Flag
 --------
