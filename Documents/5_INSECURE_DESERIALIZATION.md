@@ -56,12 +56,13 @@ _You might never perform side effects in constructors and setters, but what abou
 
 The Fix
 -------
-An obvious fix to this problem would to not rely on accepting a dictionary of objects, but let's pretend that we cannot change how our data is represented, and take a look at how TypeNameHandling is configured in [Notes.Api/Startup.cs](../Notes.Api/Startup.cs).
+An obvious fix to this problem would to not rely on accepting a dictionary of objects, but let's pretend that we cannot change how our data is represented, and take a look at how [TypeNameHandling](https://www.newtonsoft.com/json/help/html/T_Newtonsoft_Json_TypeNameHandling.htm) is configured in [Notes.Api/Program.cs](../Notes.Api/Program.cs).
 
-If we go to `public void ConfigureServices(IServiceCollection services)`, we can see that TypeNameHandling is configured to TypeNameHandling.Auto. This enables the Json.NET features that we're exploiting.
+If we have a look at how the JSON serializer is configured in `.AddNewtonsoftJson(...)`, we can see that TypeNameHandling is configured as `TypeNameHandling.Auto`. This enables the Json.NET features that we're exploiting.
 
 ```csharp
-services
+builder.Services
+    .ConfigureSecrets(builder.Configuration)
     .AddControllers()
     .AddNewtonsoftJson(options =>
     {

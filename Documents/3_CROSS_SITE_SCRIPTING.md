@@ -36,13 +36,21 @@ The Fix
 -------
 A lot of issues are enabling this XSS attack. We could for instance probably do a better job validating the content of the notes we store to the database. But one issue is especially significant, when displaying the sticky notes returned from Notes.Api, we're using the `innerHTML`-property to add the note content to the DOM element containing the sticky note.
 
-Instead of using `innerHTML` to display text, we should have been using `innerText`, to signal to the browser that anything we supply should be displayed as text. To fix this, we can open [Notes.Client/script.js](../Notes.Client/script.js) and edit `noteListItem` so we use `innerText` instead of `innerHTML`.
+```javascript
+const noteListItem = note => {
+    var content = document.createElement('div');
+    content.setAttribute('class', 'note-content');
+    content.innerHTML = note.content;
 
-![](../Images/xss-note-list-item.png)
+    // Omitting other DOM-operations
 
-_In other words, replace line 256 with the following._
+    return item;
+}
+```
 
-```javscript
+Instead of using `innerHTML` to display text, we should have been using `innerText`, to signal to the browser that anything we supply should be displayed as text. To fix this, we can open [Notes.Client/script.js](../Notes.Client/script.js) and edit the function `noteListItem` so we use `innerText` instead of `innerHTML`.
+
+```javascript
 content.innerText = note.content;
 ```
 Now we should have avoided the XSS attack, and the note should display the nefarious content as text, for all to see.
