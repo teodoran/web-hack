@@ -1,4 +1,4 @@
-namespace Notes.Api;
+namespace Notes.Api.AccessControl;
 
 using System;
 using System.Net.Http.Headers;

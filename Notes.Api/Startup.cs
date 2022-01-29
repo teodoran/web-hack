@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using Notes.Api.AccessControl;
 using Notes.Api.Configuration;
 using Notes.Api.Database;
 

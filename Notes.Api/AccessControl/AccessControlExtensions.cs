@@ -1,4 +1,4 @@
-namespace Notes.Api.Configuration;
+namespace Notes.Api.AccessControl;
 
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
