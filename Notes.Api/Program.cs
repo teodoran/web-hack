@@ -30,6 +30,7 @@ application
     .UseSwaggerDocumentation()
     .UseRouting()
     .UseAccessControl()
+    .UseCorrelationId()
     .UseEndpoints(endpoints => endpoints.MapControllers());
 
 application

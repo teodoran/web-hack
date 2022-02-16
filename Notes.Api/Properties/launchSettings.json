@@ -7,7 +7,8 @@
       "launchUrl": "client",
       "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ENABLE_VULNERABILITY": "false"
       }
     }
   }
