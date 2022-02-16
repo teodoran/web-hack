@@ -34,3 +34,4 @@ _These are the vulnerabilities that we'll be working with. Start with the first 
 3. [Cross Site Scripting](3_CROSS_SITE_SCRIPTING.md)
 4. [SQL Injection](4_SQL_INJECTION.md)
 5. [Insecure Deserialization](5_INSECURE_DESERIALIZATION.md)
+6. [Vulnerable and Outdated Components](6_VULNERABLE_AND_OUTDATED_COMPONENTS.md)
