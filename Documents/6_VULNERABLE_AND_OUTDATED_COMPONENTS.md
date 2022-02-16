@@ -40,7 +40,7 @@ public static string Content =>
 
 Seems like nothing strange is going on here. Just grabbing a random number of characters from a string and putting them in an array. Surprisingly `.ToArray()` is actually the source of the message!
 
-When working with .NET, one option is to declare dependencies in the project file. For Notes.Api, this file is [Notes.Api/Notes.Api.csproj](/home/teodoran/depot/web-hack/Notes.Api/Notes.Api.csproj). Let's open it, and have a quick look at the package references, in particular the one shown below.
+When working with .NET, one option is to declare dependencies in the project file. For Notes.Api, this file is [Notes.Api/Notes.Api.csproj](../Notes.Api/Notes.Api.csproj). Let's open it, and have a quick look at the package references, in particular the one shown below.
 
 ```xml
 <PackageReference Include="Swashbukle.AspNetCore" Version="2.0.0" />
@@ -76,7 +76,7 @@ Finally, the fake `.ToArray()` uses the real version from `System.Linq.Enumerabl
 
 The Fix
 -------
-In this case the fix is quite easy. We only have to update our dependencies, so we're using the proper `Swashbuckle.AspNetCore` package. Let's update [Notes.Api/Notes.Api.csproj](/home/teodoran/depot/web-hack/Notes.Api/Notes.Api.csproj) with the proper package dependency shown below:
+In this case the fix is quite easy. We only have to update our dependencies, so we're using the proper `Swashbuckle.AspNetCore` package. Let's update [Notes.Api/Notes.Api.csproj](../Notes.Api/Notes.Api.csproj) with the proper package dependency shown below:
 
 ```xml
 <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
